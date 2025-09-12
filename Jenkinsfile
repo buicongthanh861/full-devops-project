@@ -2,7 +2,10 @@ pipeline {
     agent {
         label 'maven'
     }
-
+    environment {
+        JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-amd64'
+        PATH = "${JAVA_HOME}/bin:/opt/apache-maven-3.9.9/bin:${env.PATH}"
+    }
     stages {
         stage('Checkout Code') {
             steps{
@@ -14,7 +17,7 @@ pipeline {
         stage("Build with Maven") {
             steps {
                 //chay maven bang duong dan tuyet doi
-                sh '/opt/apache-maven-3.9.9/bin/mvn clean deploy'
+                sh 'mvn clean deploy'
             }
         }
     }
