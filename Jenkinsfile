@@ -3,11 +3,11 @@ pipeline{
         label 'maven'
     }
 environment {
-    PATH = "/opt/apache-maven-3.9.9/bin/:$PATH"
+    PATH = "/opt/apache-maven-3.9.9/bin/:${env.PATH}"
 }
 
     stages {
-        stage('Clone-code') {
+        stage('build') {
             steps {
                 sh 'mvn clean deploy'
             }
