@@ -9,15 +9,21 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps{
-                //check code tu github
                 git branch: 'main', url: 'https://github.com/buicongthanh861/full-devops-project.git'
+            }
+        }
+
+        stage('Check Tools') {
+            steps {
+                sh 'java -version'
+                sh 'ls -la /opt/apache-maven-3.9.9/bin/mvn || echo "Maven not found at specified path"'
+                sh 'which mvn || echo "Maven not in PATH"'
             }
         }
 
         stage("Build with Maven") {
             steps {
-                //chay maven bang duong dan tuyet doi
-                sh '/opt/apache-maven-3.9.9/bin/mvn clean deploy'
+                sh 'mvn clean deploy'
             }
         }
     }
