@@ -1,8 +1,6 @@
-pieline{
-    agen {
-        node {
-            label 'maven'
-        }
+pipeline{
+    agent {
+        label 'maven'
     }
 environment {
     PATH = "/opt/apache-maven-3.9.9/bin/:$PATH"
@@ -13,5 +11,6 @@ environment {
             steps {
                 sh 'mvn clean deploy'
             }
+        }
     }
 }
