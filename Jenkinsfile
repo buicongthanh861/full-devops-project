@@ -17,7 +17,7 @@ pipeline {
         stage("Build with Maven") {
             steps {
                 //chay maven bang duong dan tuyet doi
-                sh 'mvn clean deploy'
+                sh '/opt/apache-maven-3.9.9/bin/mvn clean deploy'
             }
         }
     }
