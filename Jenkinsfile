@@ -9,9 +9,9 @@ enviroment {
 }
 
     stages {
-        stage('Clone-code') {
+        stage('build') {
             steps {
-                git branch: 'main', url: 'https://github.com/buicongthanh861/full-devops-project.git'
+                sh 'mvn clean deploy'
             }
         }
     }
