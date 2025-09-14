@@ -19,13 +19,9 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    environment {
-                     scannerHome = tool 'congthanh-sonar-scanner'
-                    }
-                    steps{
+                    def scannerHome = tool 'congthanh-sonar-scanner'
                     withSonarQubeEnv('sonarqube-server') {
                         sh "${scannerHome}/bin/sonar-scanner"
-                    }
                     }
                 }
             }
