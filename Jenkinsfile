@@ -1,4 +1,5 @@
-def registry = 'https://trial4tof6s.jfrog.io'
+def registry = "https://trial4tof6s.jfrog.io"
+
 pipeline {
     agent {
         node {
@@ -50,31 +51,38 @@ pipeline {
    //         }
    //     }
 
-         stage("Jar Publish") {
-        steps {
-            script {
+   
+        stage("Jar Publish") {
+            steps {
+                script {
                     echo '<--------------- Jar Publish Started --------------->'
-                     def server = Artifactory.newServer url:registry+"/artifactory" ,  credentialsId:"artifactory_token"
-                     def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}";
-                     def uploadSpec = """{
-                          "files": [
+
+                    def server = Artifactory.newServer(
+                        url: registry + "/artifactory",
+                        credentialsId: "artfiact-cred"   // ID bạn lưu trong Jenkins
+                    )
+
+                    def properties = "buildid=${env.BUILD_ID},commitid=${GIT_COMMIT}"
+
+                    def uploadSpec = """{
+                        "files": [
                             {
-                              "pattern": "jarstaging/(*)",
-                              "target": "libs-release-local/{1}",
-                              "flat": "false",
-                              "props" : "${properties}",
-                              "exclusions": [ "*.sha1", "*.md5"]
+                                "pattern": "target/*.jar",
+                                "target": "libs-release-local/com/demo-app/${env.BUILD_ID}/",
+                                "props": "${properties}",
+                                "exclusions": [ "*.sha1", "*.md5" ]
                             }
-                         ]
-                     }"""
-                     def buildInfo = server.upload(uploadSpec)
-                     buildInfo.env.collect()
-                     server.publishBuildInfo(buildInfo)
-                     echo '<--------------- Jar Publish Ended --------------->'  
-            
+                        ]
+                    }"""
+
+                    def buildInfo = server.upload(uploadSpec)
+                    buildInfo.env.collect()
+                    server.publishBuildInfo(buildInfo)
+
+                    echo '<--------------- Jar Publish Ended --------------->'
+                }
             }
-        }   
-    }   
+        }
     }
     
     post {
