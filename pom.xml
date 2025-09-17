@@ -111,7 +111,7 @@
     <distributionManagement>
         <repository>
             <id>dev</id>
-            <url>https://trial4tof6s.jfrog.io/artifactory/libs-snapshot-local</url>
+            <url>file://jarstaging</url>
         </repository>
     </distributionManagement>
 </project>
